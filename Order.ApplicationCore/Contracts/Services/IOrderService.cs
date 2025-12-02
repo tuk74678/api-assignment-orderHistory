@@ -1,10 +1,11 @@
 ﻿using Order.ApplicationCore.Entities;
+using Order.ApplicationCore.Models;
 
 namespace Order.ApplicationCore.Contracts.Services;
 
 public interface IOrderService
 {
-    Task<Orders> InsertOrderAsync(Orders order);
+    Task<OrderResponseDto> InsertOrderAsync(InsertOrderModel model);
     Task<Orders> UpdateOrderAsync(Orders order);
     Task<Orders> DeleteOrderAsync(int id);
     Task<IEnumerable<Orders>> GetAllOrdersAsync();

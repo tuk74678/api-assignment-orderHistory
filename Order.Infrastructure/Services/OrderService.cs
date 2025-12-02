@@ -1,6 +1,7 @@
 ﻿using Order.ApplicationCore.Contracts.Repositories;
 using Order.ApplicationCore.Contracts.Services;
 using Order.ApplicationCore.Entities;
+using Order.ApplicationCore.Models;
 
 namespace Order.Infrastructure.Services;
 
@@ -12,9 +13,45 @@ public class OrderService: IOrderService
         _orderRepository = orderRepository;
     }
     
-    public async Task<Orders> InsertOrderAsync(Orders order)
+    public async Task<OrderResponseDto> InsertOrderAsync(InsertOrderModel model)
     {
-        return await _orderRepository.InsertAsync(order);
+        // Map DTO → Entity
+        var order = new Orders
+        {
+            Order_Date = model.Order_Date,
+            CustomerId = model.CustomerId,
+            CustomerName = model.CustomerName,
+            ShippingAddress = model.ShippingAddress,
+            OrderDetails = model.OrderDetails.Select(d => new OrderDetail
+            {
+                Product_Name = d.Product_Name,
+                Quantity = d.Quantity,
+                Price = d.Price,
+                Discount = d.Discount
+            }).ToList()
+        };
+
+        // Save to DB
+        var createdOrder = await _orderRepository.InsertAsync(order);
+
+        // Map Entity → Response DTO to avoid Circular Reference
+        return new OrderResponseDto
+        {
+            Id = createdOrder.Id,
+            Order_Date = createdOrder.Order_Date,
+            CustomerId = createdOrder.CustomerId,
+            CustomerName = createdOrder.CustomerName,
+            ShippingAddress = createdOrder.ShippingAddress,
+            BillAmount = createdOrder.BillAmount,
+            Order_Status = createdOrder.Order_Status,
+            OrderDetails = createdOrder.OrderDetails.Select(d => new OrderDetailResponseDto
+            {
+                Product_Name = d.Product_Name,
+                Quantity = d.Quantity,
+                Price = d.Price,
+                Discount = d.Discount
+            }).ToList()
+        };
     }
 
     public Task<Orders> UpdateOrderAsync(Orders order)
@@ -22,9 +59,9 @@ public class OrderService: IOrderService
         throw new NotImplementedException();
     }
 
-    public Task<Orders> DeleteOrderAsync(int id)
+    public async Task<Orders> DeleteOrderAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _orderRepository.DeleteAsync(id);
     }
 
     public Task<IEnumerable<Orders>> GetAllOrdersAsync()
