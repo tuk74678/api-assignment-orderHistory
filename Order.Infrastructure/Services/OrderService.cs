@@ -12,9 +12,9 @@ public class OrderService: IOrderService
         _orderRepository = orderRepository;
     }
     
-    public Task<Orders> InsertOrderAsync(Orders order)
+    public async Task<Orders> InsertOrderAsync(Orders order)
     {
-        throw new NotImplementedException();
+        return await _orderRepository.InsertAsync(order);
     }
 
     public Task<Orders> UpdateOrderAsync(Orders order)
