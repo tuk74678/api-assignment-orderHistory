@@ -56,9 +56,5 @@ public class BaseRepository<T>: IRepository<T> where T : class
         }
         return await query.FirstOrDefaultAsync(e => EF.Property<int>(e, "Id") == id);
     }
-
-    public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
-    {
-        return await _orderHistoryDbContext.Set<T>().Where(predicate).ToListAsync();
-    }
+    
 }

@@ -111,11 +111,6 @@ public class OrderService: IOrderService
         return await _orderRepository.GetAllAsync();
     }
 
-    public Task<Orders> GetOrderByIdAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<IEnumerable<OrderResponseDto>> GetOrderByCustomerIdAsync(int customerId)
     {
         // Load orders with their details from DB
