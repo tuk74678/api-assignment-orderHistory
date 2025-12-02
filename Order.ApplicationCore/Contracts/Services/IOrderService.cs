@@ -10,5 +10,5 @@ public interface IOrderService
     Task<Orders> DeleteOrderAsync(int id);
     Task<IEnumerable<Orders>> GetAllOrdersAsync();
     Task<Orders> GetOrderByIdAsync(int id);
-    Task<IEnumerable<Orders>> GetOrderByCustomerIdAsync(int customerId);
+    Task<IEnumerable<OrderResponseDto>> GetOrderByCustomerIdAsync(int customerId);
 }

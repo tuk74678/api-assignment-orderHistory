@@ -116,8 +116,30 @@ public class OrderService: IOrderService
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Orders>> GetOrderByCustomerIdAsync(int customerId)
+    public async Task<IEnumerable<OrderResponseDto>> GetOrderByCustomerIdAsync(int customerId)
     {
-        throw new NotImplementedException();
+        // Load orders with their details from DB
+        var orders = await _orderRepository.GetOrderByCustomerIdAsync(customerId);
+
+        // Map entities to response DTOs
+        var orderDtos = orders.Select(o => new OrderResponseDto
+        {
+            Id = o.Id,
+            Order_Date = o.Order_Date,
+            CustomerId = o.CustomerId,
+            CustomerName = o.CustomerName,
+            ShippingAddress = o.ShippingAddress,
+            BillAmount = o.BillAmount,
+            Order_Status = o.Order_Status,
+            OrderDetails = o.OrderDetails?.Select(d => new OrderDetailResponseDto
+            {
+                Product_Name = d.Product_Name,
+                Quantity = d.Quantity,
+                Price = d.Price,
+                Discount = d.Discount
+            }).ToList() ?? new List<OrderDetailResponseDto>()
+        }).ToList();
+
+        return orderDtos;
     }
 }

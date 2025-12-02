@@ -13,7 +13,7 @@ public class OrderRepository: BaseRepository<Orders>, IOrderRepository
 
     public async Task<IEnumerable<Orders>> GetOrderByCustomerIdAsync(int customerId)
     {
-        var orders = await _orderHistoryDbContext.Order
+        var orders = await _orderHistoryDbContext.Set<Orders>()
             .AsNoTracking()
             .Include(o => o.OrderDetails)
             .Where(o => o.CustomerId == customerId)

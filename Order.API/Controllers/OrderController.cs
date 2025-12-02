@@ -52,5 +52,12 @@ namespace Order.API.Controllers
         {
             return await _orderService.GetAllOrdersAsync();
         }
+
+        [HttpGet("customer/{customerId}")]
+        public async Task<IActionResult> GetOrderByCustomerId(int customerId)
+        {
+            var orders = await _orderService.GetOrderByCustomerIdAsync(customerId);
+            return Ok(orders);
+        }
     }
 }
