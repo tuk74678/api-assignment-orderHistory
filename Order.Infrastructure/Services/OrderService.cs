@@ -106,9 +106,9 @@ public class OrderService: IOrderService
         return await _orderRepository.DeleteAsync(id);
     }
 
-    public Task<IEnumerable<Orders>> GetAllOrdersAsync()
+    public async Task<IEnumerable<Orders>> GetAllOrdersAsync()
     {
-        throw new NotImplementedException();
+        return await _orderRepository.GetAllAsync();
     }
 
     public Task<Orders> GetOrderByIdAsync(int id)

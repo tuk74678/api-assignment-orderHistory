@@ -46,5 +46,11 @@ namespace Order.API.Controllers
             var updated = await _orderService.UpdateOrderAsync(order);
             return Ok(updated);
         }
+        
+        [HttpGet]
+        public async Task<IEnumerable<Orders>> GetAllOrders()
+        {
+            return await _orderService.GetAllOrdersAsync();
+        }
     }
 }
