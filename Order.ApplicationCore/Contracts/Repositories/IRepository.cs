@@ -1,10 +1,13 @@
-﻿namespace Order.ApplicationCore.Contracts.Repositories;
+﻿using System.Linq.Expressions;
+
+namespace Order.ApplicationCore.Contracts.Repositories;
 
 public interface IRepository<T> where T : class
 {
-    Task<T> Insert(T entity);
-    Task<T> Update(T entity);
-    Task<T> Delete(int id);
+    Task<T> InsertAsync(T entity);
+    Task<T> UpdateAsync(T entity);
+    Task<T> DeleteAsync(int id);
     Task<IEnumerable<T>> GetAllAsync();
     Task<T> GetByIdAsync(int id);
+    Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
 }
