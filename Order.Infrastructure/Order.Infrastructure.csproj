@@ -7,13 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Data\" />
       <Folder Include="Repositories\" />
       <Folder Include="Services\" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Order.ApplicationCore\Order.ApplicationCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.11" />
     </ItemGroup>
 
 </Project>
