@@ -13,5 +13,6 @@ public class Orders
     public decimal? BillAmount { get; set; }
     public string? Order_Status { get; set; }
     // Navigation property
-    public ICollection<OrderDetail> OrderDetails { get; set; }
+    public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
 }

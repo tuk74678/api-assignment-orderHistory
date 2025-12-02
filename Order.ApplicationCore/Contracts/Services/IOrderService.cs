@@ -6,7 +6,7 @@ namespace Order.ApplicationCore.Contracts.Services;
 public interface IOrderService
 {
     Task<OrderResponseDto> InsertOrderAsync(InsertOrderModel model);
-    Task<Orders> UpdateOrderAsync(Orders order);
+    Task<OrderResponseDto> UpdateOrderAsync(UpdateOrderModel model);
     Task<Orders> DeleteOrderAsync(int id);
     Task<IEnumerable<Orders>> GetAllOrdersAsync();
     Task<Orders> GetOrderByIdAsync(int id);

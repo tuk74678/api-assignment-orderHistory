@@ -35,9 +35,16 @@ namespace Order.API.Controllers
         public async Task<ActionResult<Orders>> DeleteOrder(int id)
         {
             var deletedOrder = await _orderService.DeleteOrderAsync(id);
-            if (deletedOrder == null) return NotFound();
+            if (deletedOrder == null) 
+                return NotFound();
             return Ok(deletedOrder);
         }
         
+        [HttpPut]
+        public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderModel order)
+        {
+            var updated = await _orderService.UpdateOrderAsync(order);
+            return Ok(updated);
+        }
     }
 }
